@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Calculator-Module</title>
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="menu">
+            <div class="menu-parameter">
+                <h3>Тип автомобиля</h3>
+                <select name="type" id="type" class="menu-parameter-field">
+                    <option value="">1</option>
+                    <option value="">2</option>
+                    <option value="">3</option>
+                </select>
+            </div>
+            <div class="menu-parameter">
+                <h3>Стоимость лота</h3>
+                <input type="text" placeholder="Введите стоимость" id="price" class="menu-parameter-field">
+            </div>
+            <div class="menu-parameter">
+                <h3>Объем двигателя</h3>
+                <select name="capacity" id="capacity" class="menu-parameter-field">
+                    <option value="">1</option>
+                    <option value="">2</option>
+                    <option value="">3</option>
+                </select>
+            </div>
+            <div class="menu-parameter">
+                <h3>Тип двигателя</h3>
+                <select name="engine-type" id="engine-type" class="menu-parameter-field">
+                    <option value="">1</option>
+                    <option value="">2</option>
+                    <option value="">3</option>
+                </select>
+            </div>
+            <div class="menu-parameter">
+                <h3>Год выпуска</h3>
+                <select name="year" id="year" class="menu-parameter-field">
+                    <option value="">1</option>
+                    <option value="">2</option>
+                    <option value="">3</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="table">
+            <div class="table-board">
+                <div class="board-wrapper">
+                    <div class="table-board-section-1">
+                        <h1>ПЕРВЫЙ ПЛАТЕЖ</h1>
+                        <div class="table-raw">
+                            <p>Предполагаемая стоимость автомобиля на аукционе</p>
+                            <p class="price">$</p>
+                        </div>
+                        <div class="table-raw">
+                            <p>Аукционные сборы</p>
+                            <p class="">$</p>
+                        </div>
+                        <div class="table-raw">
+                            <p>Комиссия GeorgiaPodbor</p>
+                            <p class="comission">500$</p>
+                        </div>
+                        <div class="table-raw">
+                            -<h5>Оплачивается на следующий день после выиграша автомобиля</h5>
+                            <h5 class="first-sum">$</h5>
+                        </div>
+                    </div>
+
+                    <div class="table-board-section-2">
+                        <h1>ВТОРОЙ ПЛАТЕЖ</h1>
+                        <div class="table-raw">
+                            <p>Доставка сушей и морем до порта Грузии</p>
+                            <p class="">$</p>
+                        </div>
+                        <div class="table-raw">
+                            <p>Страховка</p>
+                            <p class="">$</p>
+                        </div>
+                        <div class="table-raw">
+                            -<h5>Оплачивается за 2 недели до прибытия автомобиля в порт Грузии</h5>
+                            <h5 class="second-sum">$</h5>
+                        </div>
+                    </div>
+
+                    <div class="table-board-section-3">
+                        <h1>ТРЕТИЙ ПЛАТЕЖ</h1>
+                        <div class="table-raw">
+                            <p>Таможенные сборы</p>
+                            <p class="">$</p>
+                        </div>
+                        <div class="table-raw">
+                            <p>СБКТПС + электронный ПТС</p>
+                            <p class="">$</p>
+                        </div>
+                        <div class="table-raw">
+                            -<h5>Оплачивается при оформлении автомобиля</h5>
+                            <h5 class="third-sum">$</h5>
+                        </div>
+                    </div>
+
+                    <div class="table-board-bottom">
+                        <div class="table-raw">
+                            <h1>Итоговая стоимость автомобиля</h1>
+                            <h1 class="final-sum">$</h1>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-board-warning">
+                    <p>калькулятор рассчитывает стоимость привоза автомобиля из США. Для расчета стоимости привоза из
+                        Европы и ОАЭ обратитесь к нашему специалисту </p>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    <script src="calc.js"></script>
+</body>
+
+</html>
