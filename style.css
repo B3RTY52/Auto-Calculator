@@ -36,6 +36,9 @@ input,
 select {
     font-family: inherit;
     padding: 10px;
+    font-size: 18px;
+    line-height: inherit;
+    margin: 0;
 }
 
 input::-ms-clear {
@@ -44,7 +47,7 @@ input::-ms-clear {
 
 .wrapper {
     margin: 0 auto;
-    width: 1120px;
+    max-width: 1120px;
 }
 
 .menu {
@@ -100,8 +103,35 @@ input::-ms-clear {
 
 .table-board-section {
     width: 490px;
-    border-bottom: 1px solid #253F84;
     margin: 0 auto;
+    padding-top: 20px;
+}
+
+.table-board-bottom h1,
+.table-board-section h1 {
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 28px;
+    text-transform: uppercase;
+    padding-bottom: 30px;
+}
+
+.table-board-section p {
+    padding-bottom: 15px;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+}
+
+.table-board-section h5 {
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 21px;
+    padding: 15px 0 30px;
+}
+
+.line {
+    border-top: 1px solid #253F84;
 }
 
 .table-raw {
@@ -109,9 +139,39 @@ input::-ms-clear {
     justify-content: space-between;
 }
 
+.table-raw-name {
+    width: 85%;
+}
+
 .table-board-bottom {
-    height: 137px;
+    height: 129px;
+    width: 100%;
     background-color: #253F84;
-    border-radius: 8px;
+    border-radius: 7px;
     color: #FDFDFD;
+    padding: 0 30px;
+}
+
+.table-board-bottom .table-raw {
+    height: 100%;
+}
+
+.table-board-bottom h1 {
+    padding-top: 35px;
+}
+
+.table-board-warning {
+    margin-top: 30px;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.table-board-warning p {
+    width: 512px;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 21px;
+    color: #172C62;
+    opacity: 0.6;
 }
