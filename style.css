@@ -175,3 +175,14 @@ input::-ms-clear {
     color: #172C62;
     opacity: 0.6;
 }
+
+.icon::before {
+    display: inline-block;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+}
+
+.menu-parameter::after {
+    font: var(--fa-font-solid);
+    content: "\f078";
+}
