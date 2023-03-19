@@ -1,52 +1,145 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const carsType = document.querySelectorAll('.values-list'),
-        board = document.querySelectorAll('.menu-parameter-board'),
+    const wrapper = document.querySelectorAll('.select'),
         price = document.querySelector('#price'),
-        menu = document.querySelector('.menu');
+        engine = document.querySelectorAll('.engine');
 
-    console.log(price);
+    let fullPrice, firstSum;
 
-    carsType.forEach(el => el.addEventListener('click', (e) => {
-        if (e.target.id === 'Электрический' ||
-            e.target.id === 'Бензиновый' ||
-            e.target.id === 'Дизельный') {
+    function engineChoose(engines) {
+        engines.forEach(el => {
+            if (!el.classList.contains('hidden')) {
+                el.classList.add('hidden');
+            }
+        })
+    }
 
-            document.querySelector('.engine-value').textContent = `${e.target.id}`;
+    function renderType(typesClass) {
+        document.querySelector(typesClass).classList.remove('hidden');
+    }
 
-            if (e.target.id === 'Электрический') {
-                menu.insertAdjacentHTML('beforeend', `
-                <div class="menu-parameter">
-                <h3>Объем двигателя</h3>
-                <div class="field-wrapper">
-                        <div class="menu-parameter-field">
-                            <p class="menu-parameter-value">1.5</p>
-                            <i class="fa-solid fa-chevron-down chevron-icons"></i>
-                        </div>
-                        <ul class="menu-parameter-board">
-                            <li class="values-list">Легковой</li>
-                            <li class="values-list">Кроссовер/Внедорожник</li>
-                            <li class="values-list">Пикап</li>
-                        </ul>
-                    </div>
-                </div>
-                `);
-                console.log(1);
+    function renderLists(list, amount, startFrom, rate) {
+        for (let i = startFrom; i <= amount; i++) {
+            list.querySelector('.menu-parameter-board').insertAdjacentHTML('beforeend', `
+            <li class="values-list" id="${i * rate}">${i * rate}</li>
+            `);
+        }
+    }
+
+    function renderSum(...numbers) {
+        fullPrice = numbers.reduce((acc, curr) => acc + curr, 0);
+        document.querySelector('.final-sum').textContent = `${fullPrice + 3500 + 600}$`;
+    }
+
+    function firstCount() {
+        let fees = 0;
+
+        if (firstSum) {
+            firstSum = +firstSum;
+            if (0 < firstSum && firstSum < 50) {
+                fees += 25;
+            }
+            if (firstSum >= 50 && firstSum < 100) {
+                fees += 45 + 39;
+            }
+            if (firstSum >= 100 && firstSum < 200) {
+                fees += 80 + 39;
+            }
+            if (firstSum >= 200 && firstSum < 400) {
+                fees += 120 + 39;
+            }
+            if (firstSum >= 400 && firstSum < 500) {
+                fees += 160 + 39;
+            }
+            if (firstSum >= 500 && firstSum < 600) {
+                fees += 185 + 49;
+            }
+            if (firstSum >= 600 && firstSum < 700) {
+                fees += 210 + 49;
+            }
+            if (firstSum >= 700 && firstSum < 800) {
+                fees += 230 + 49;
+            }
+            if (firstSum >= 800 && firstSum < 900) {
+                fees += 250 + 49;
+            }
+            if (firstSum >= 900 && firstSum < 1000) {
+                fees += 275 + 49;
+            }
+            if (firstSum >= 1000 && firstSum < 1200) {
+                fees += 325 + 69;
+            }
+            if (firstSum >= 1200 && firstSum < 1300) {
+                fees += 350 + 69;
+            }
+            if (firstSum >= 1300 && firstSum < 1400) {
+                fees += 365 + 69;
+            }
+            if (firstSum >= 1400 && firstSum < 1500) {
+                fees += 380 + 69;
+            }
+            if (firstSum >= 1500 && firstSum < 2000) {
+                fees += 440 + 79;
+            }
+            if (firstSum >= 2000 && firstSum < 3000) {
+                fees += 500 + 89;
+            }
+            if (firstSum >= 3000 && firstSum < 4000) {
+                fees += 600 + 89;
+            }
+            if (firstSum >= 4000 && firstSum < 6000) {
+                fees += 750 + 99;
+            }
+            if (firstSum >= 7500 && firstSum < 15000) {
+                fees += 800 + 129;
+            }
+            if (firstSum >= 15000) {
+                fees += Math.round((firstSum * 7) / 100) + 129;
             }
         }
-        if (e.target.id === 'Легковой' ||
-            e.target.id === 'Кроссовер/Внедорожник' ||
-            e.target.id === 'Пикап') {
-            document.querySelector('.type-value').textContent = `${e.target.id}`;
-            console.log(2);
-        }
-        console.log(e.target.id);
-    }));
+
+        document.querySelector('.auction-fees').textContent = `${fees} $`;
+        return firstSum = fees + firstSum + 500;;
+    }
 
     price.addEventListener('input', () => {
-        document.querySelector('.price').textContent = `${price.value.replace(/\D/g, '')}$`;
-    })
+        firstSum = +(0 + price.value.replace(/\D/g, ''));
+        document.querySelector('.price').textContent = `${firstSum} $`;
+        document.querySelector('.first-sum').textContent = `${firstCount()}$`;
+        renderSum(firstSum)
+    });
 
-    // board.addEventListener('click', (e) => {
-    //     e.target.classList.add
-    // });
+    wrapper.forEach(el => {
+        el.addEventListener('click', () => {
+            el.querySelector('.menu-parameter-board').classList.toggle('hidden');
+            el.querySelector('.menu-parameter-field').classList.toggle('hidden');
+        })
+
+        if (el.parentElement.classList.contains('benzin')) {
+            renderLists(el, 30, 10, 100);
+        }
+
+        if (el.parentElement.classList.contains('year')) {
+            console.log(123);
+            renderLists(el, 2023, 2002, 1);
+        }
+
+        const carsType = el.querySelectorAll('.values-list');
+
+        carsType.forEach(type => {
+            type.addEventListener('click', (e) => {
+                el.querySelector('.menu-parameter-value').textContent = `${e.target.id}`;
+                if (e.target.id === 'Электрический') {
+                    engineChoose(engine);
+                    renderType('.electro');
+                }
+
+                if (e.target.id === 'Бензиновый' ||
+                    e.target.id === 'Дизельный') {
+                    engineChoose(engine);
+                    renderType('.benzin');
+                }
+            })
+        })
+    });
+
 });

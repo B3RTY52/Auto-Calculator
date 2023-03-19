@@ -15,39 +15,67 @@
         <div class="menu">
             <div class="menu-parameter">
                 <h3>Тип автомобиля</h3>
-                <select name="type" id="type" class="menu-parameter-field">
-                    <option value="">1</option>
-                    <option value="">2</option>
-                    <option value="">3</option>
-                </select>
+                <div class="field-wrapper select">
+                    <div class="menu-parameter-field">
+                        <p class="menu-parameter-value">Выбрать тип</p>
+                        <i class="fa-solid fa-chevron-down chevron-icons"></i>
+                    </div>
+                    <ul class="menu-parameter-board hidden">
+                        <li class="values-list" id="Легковой">Легковой</li>
+                        <li class="values-list" id="Кроссовер/Внедорожник">Кроссовер/Внедорожник</li>
+                        <li class="values-list" id="Пикап">Пикап</li>
+                    </ul>
+                </div>
             </div>
             <div class="menu-parameter">
-                <h3>Стоимость лота</h3>
-                <input type="text" placeholder="Введите стоимость" id="price" class="menu-parameter-field">
+                <h3>Стоимость <span class="info">лота</span></h3>
+                <input type="text" placeholder="Введите стоимость" id="price" maxlength="6"
+                    class="menu-parameter-input hp" />
             </div>
-            <div class="menu-parameter">
-                <h3>Объем двигателя</h3>
-                <select name="capacity" id="capacity" class="menu-parameter-field">
-                    <option value="">1</option>
-                    <option value="">2</option>
-                    <option value="">3</option>
-                </select>
-            </div>
-            <div class="menu-parameter">
-                <h3>Тип двигателя</h3>
-                <select name="engine-type" id="engine-type" class="menu-parameter-field">
-                    <option value="">1</option>
-                    <option value="">2</option>
-                    <option value="">3</option>
-                </select>
-            </div>
-            <div class="menu-parameter">
+
+            <div class="menu-parameter year">
                 <h3>Год выпуска</h3>
-                <select name="year" id="year" class="menu-parameter-field">
-                    <option value="">1</option>
-                    <option value="">2</option>
-                    <option value="">3</option>
-                </select>
+                <div class="field-wrapper select">
+                    <div class="menu-parameter-field">
+                        <p class="menu-parameter-value">Выберите год</p>
+                        <i class="fa-solid fa-chevron-down chevron-icons"></i>
+                    </div>
+                    <ul class="menu-parameter-board hidden">
+                    </ul>
+                </div>
+            </div>
+            <div class="menu-parameter select">
+                <h3>Тип двигателя</h3>
+                <div class="field-wrapper">
+                    <div class="menu-parameter-field">
+                        <p class="menu-parameter-value"><span class="engine-value">Выбрать тип двигателя</span></p>
+                        <i class="fa-solid fa-chevron-down chevron-icons"></i>
+                    </div>
+                    <ul class="menu-parameter-board hidden">
+                        <li class="values-list" id="Бензиновый">Бензиновый</li>
+                        <li class="values-list" id="Дизельный">Дизельный</li>
+                        <li class="values-list" id="Электрический">Электрический</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="menu-parameter engine benzin hidden">
+                <h3>Объем двигателя</h3>
+                <div class="field-wrapper select">
+                    <div class="menu-parameter-field">
+                        <p class="menu-parameter-value">Выберите объем (в см3)</p>
+                        <i class="fa-solid fa-chevron-down chevron-icons"></i>
+                    </div>
+                    <ul class="menu-parameter-board hidden">
+
+                    </ul>
+                </div>
+            </div>
+            <div class="menu-parameter engine electro hidden">
+                <h3>Мощность двигателя</h3>
+                <div class="field-wrapper">
+                    <input type="text" placeholder="Введите мощность в" id="power" maxlength="3"
+                        class="menu-parameter-input hp">
+                </div>
             </div>
         </div>
 
@@ -56,14 +84,13 @@
                 <div class="board-wrapper">
                     <div class="table-board-section">
                         <h1>ПЕРВЫЙ ПЛАТЕЖ</h1>
-                        <i class="fa-solid fa-chevron-down"></i>
                         <div class="table-raw">
                             <p class="table-raw-name">Предполагаемая стоимость автомобиля на аукционе</p>
                             <p class="price">$</p>
                         </div>
                         <div class="table-raw">
                             <p class="table-raw-name">Аукционные сборы</p>
-                            <p class="">$</p>
+                            <p class="auction-fees">$</p>
                         </div>
                         <div class="table-raw">
                             <p class="table-raw-name">Комиссия GeorgiaPodbor</p>
@@ -88,14 +115,14 @@
                         <div class="table-raw">
                             <h5 class="table-raw-name">Оплачивается за 2 недели до прибытия автомобиля в порт Грузии
                             </h5>
-                            <h5 class="second-sum">$</h5>
+                            <h5 class="second-sum">3500 $</h5>
                         </div>
                     </div>
 
                     <div class="table-board-section line">
                         <h1>ТРЕТИЙ ПЛАТЕЖ</h1>
                         <div class="table-raw">
-                            <p class="table-raw-name">Таможенные сборы</p>
+                            <p class="table-raw-name">Таможенные <span class="info">сборы</span></p>
                             <p class="">$</p>
                         </div>
                         <div class="table-raw">
@@ -117,7 +144,10 @@
                 </div>
 
                 <div class="table-board-warning">
-                    <p>калькулятор рассчитывает стоимость привоза автомобиля из США. Для расчета стоимости привоза из
+                    <span class="warning"></span>
+                    <p> калькулятор рассчитывает стоимость привоза автомобиля из США. Для
+                        расчета стоимости
+                        привоза из
                         Европы и ОАЭ обратитесь к нашему специалисту </p>
                 </div>
 
