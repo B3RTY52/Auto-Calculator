@@ -1,9 +1,15 @@
 document.addEventListener('DOMContentLoaded', () => {
     const wrapper = document.querySelectorAll('.select'),
         price = document.querySelector('#price'),
+        btn = document.querySelector('.btn'),
+        dataKeepers = document.querySelectorAll('input'),
         engine = document.querySelectorAll('.engine');
 
     let fullPrice, firstSum, secondSum, thirdSum;
+
+    btn.addEventListener('click', () => {
+        dataKeepers.forEach(el => console.log(el.value));
+    });
 
     function engineChoose(engines) {
         engines.forEach(el => {
@@ -25,12 +31,16 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    function renderSum(...numbers) {
-        fullPrice = numbers.reduce((acc, curr) => acc + curr, 0);
-        document.querySelector('.final-sum').textContent = `${fullPrice + 3500 + 600}$`;
+    function postData(id, value) {
+        document.querySelector(`#${id}`).value = `${value}`;
     }
 
-    function firstCount() {
+    // function renderSum(...numbers) {
+    //     fullPrice = numbers.reduce((acc, curr) => acc + curr, 0);
+    //     document.querySelector('.final-sum').textContent = `${fullPrice + 3500 + 600}$`;
+    // }
+
+    function firstSumCounter() {
         let fees = 0;
 
         if (firstSum) {
@@ -99,16 +109,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 fees += Math.round((firstSum * 7) / 100) + 129;
             }
         }
-
-        document.querySelector('.auction-fees').textContent = `${fees} $`;
-        return firstSum = fees + firstSum + 500;;
+        postData('auction-fees', fees);
+        // document.querySelector('.auction-fees').textContent = `${fees} $`;
+        firstSum = fees + firstSum + 500;
+        postData('first-sum', firstSum);
     }
 
     price.addEventListener('input', () => {
         firstSum = +(0 + price.value.replace(/\D/g, ''));
-        document.querySelector('.price').textContent = `${firstSum} $`;
-        document.querySelector('.first-sum').textContent = `${firstCount()}$`;
-        renderSum(firstSum)
+        firstSumCounter();
+        //     document.querySelector('.price').textContent = `${firstSum} $`;
+        //     document.querySelector('.first-sum').textContent = `${firstCount()}$`;
+        // renderSum(firstSum)
     });
 
     wrapper.forEach(el => {
@@ -130,8 +142,6 @@ document.addEventListener('DOMContentLoaded', () => {
         carsType.forEach(type => {
             type.addEventListener('click', (e) => {
                 el.querySelector('.menu-parameter-value').textContent = `${e.target.id}`;
-
-                let counter, age;
 
                 if (e.target.id === 'Электрический') {
                     engineChoose(engine);
@@ -155,21 +165,44 @@ document.addEventListener('DOMContentLoaded', () => {
                         shipping = 2120;
                     }
                     secondSum = shipping + ensurance;
-                    document.querySelector('.shipping').textContent = `${shipping}$`;
-                    document.querySelector('.ensurance').textContent = `${ensurance}$`;
-                    document.querySelector('.second-sum').textContent = `${secondSum}$`;
+                    postData('shipping', shipping);
+                    postData('second-sum', secondSum);
+                    // document.querySelector('.shipping').textContent = `${shipping}$`;
+                    // document.querySelector('.ensurance').textContent = `${ensurance}$`;
+                    // document.querySelector('.second-sum').textContent = `${secondSum}$`;
                 }
 
-                const str = 'sum: 41, sum2: 43, sum3:57';
+                if (type.parentElement.classList.contains('capacity')) {
+                    postData('capacity', `${e.target.id}`);
+                }
 
-
-
-
+                if (type.parentElement.classList.contains('age')) {
+                    postData('age', `${e.target.id}`);
+                }
             })
         });
 
+        function thirdSumCounter() {
+            const age = document.querySelector('#age').value,
+                capacity = document.querySelector('#capacity').value,
+                power = document.querySelector('#power').value,
+                toCheck = document.querySelector('.hp').parentElement;
 
+            if (toCheck.classList.contains('hidden')) {
+                let year = new Date().getFullYear(), index;
+                year = year - age;
 
+                if (year <= 3) {
+                    index = 6;
+                }
+                if (capacity <= 1500) {
+                    3 < year && year <= 5 ? index = 1.7 : index = 3.5;
+                }
+                if (3 < year && year <= 5) {
+
+                }
+            }
+        }
 
         // 1. До 3х лет - 5.5 евро за 1см3 + 200$ любой объем
         // 2. от 3 - 5 лет
@@ -202,5 +235,4 @@ document.addEventListener('DOMContentLoaded', () => {
         // console.log(obj); // { sum: 41, sum2: 43, sum3: 57 }
 
     });
-
 });
