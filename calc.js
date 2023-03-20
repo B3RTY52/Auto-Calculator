@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
         price = document.querySelector('#price'),
         engine = document.querySelectorAll('.engine');
 
-    let fullPrice, firstSum;
+    let fullPrice, firstSum, secondSum, thirdSum;
 
     function engineChoose(engines) {
         engines.forEach(el => {
@@ -87,7 +87,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 fees += 600 + 89;
             }
             if (firstSum >= 4000 && firstSum < 6000) {
-                fees += 750 + 99;
+                fees += 725 + 99;
+            }
+            if (firstSum >= 6000 && firstSum < 7500) {
+                fees += 750 + 119;
             }
             if (firstSum >= 7500 && firstSum < 15000) {
                 fees += 800 + 129;
@@ -119,15 +122,17 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         if (el.parentElement.classList.contains('year')) {
-            console.log(123);
             renderLists(el, 2023, 2002, 1);
         }
 
-        const carsType = el.querySelectorAll('.values-list');
 
+        const carsType = el.querySelectorAll('.values-list');
         carsType.forEach(type => {
             type.addEventListener('click', (e) => {
                 el.querySelector('.menu-parameter-value').textContent = `${e.target.id}`;
+
+                let counter, age;
+
                 if (e.target.id === 'Электрический') {
                     engineChoose(engine);
                     renderType('.electro');
@@ -138,8 +143,64 @@ document.addEventListener('DOMContentLoaded', () => {
                     engineChoose(engine);
                     renderType('.benzin');
                 }
+
+                if (type.parentElement.classList.contains('cars-type')) {
+                    let shipping = 2000,
+                        ensurance = 1000;
+
+                    if (e.target.id === 'Кроссовер/Внедорожник') {
+                        shipping = 2090;
+                    }
+                    if (e.target.id === 'Пикап') {
+                        shipping = 2120;
+                    }
+                    secondSum = shipping + ensurance;
+                    document.querySelector('.shipping').textContent = `${shipping}$`;
+                    document.querySelector('.ensurance').textContent = `${ensurance}$`;
+                    document.querySelector('.second-sum').textContent = `${secondSum}$`;
+                }
+
+                const str = 'sum: 41, sum2: 43, sum3:57';
+
+
+
+
             })
-        })
+        });
+
+
+
+
+        // 1. До 3х лет - 5.5 евро за 1см3 + 200$ любой объем
+        // 2. от 3 - 5 лет
+        // - 1000-1500 см3 - 1.5 евро за 1см3 +200$
+        // - 1501-1800 см3 - 2.5 евро за 1см3 +200$
+        // - 1801 - 2300 см3 - 2.7 евро за 1см3 +200$
+        // - 2301 - 3000 см3 - 3 евро за 1см3 +200$
+        // - 3001 и более - 3.6 евро за 1см3 +200$
+        // 3. от 5 лет и старше
+        // - 1000-1500 см3 - 3.2 евро за 1см3 +200$
+        // - 1501-1800 см3 - 3.5 евро за 1см3 +200$
+        // - 1801 - 2300 см3 - 4.8 евро за 1см3 +200$
+        // - 2301 - 3000 см3 - 5 евро за 1см3 +200$
+        // - 3001 и более - 5.7 евро за 1см3 +200$
+
+
+        // // Разбиваем строку на части по запятой и удаляем пробелы
+        // const parts = str.split(',').map(part => part.trim());
+
+        // // Создаем пустой объект
+        // const obj = {};
+
+        // // Проходимся по каждой части, разбиваем ее на ключ и значение,
+        // // и добавляем их в объект
+        // parts.forEach(part => {
+        //   const [key, value] = part.split(':').map(item => item.trim());
+        //   obj[key] = parseInt(value); // Если нужно, можно преобразовать значение в число
+        // });
+
+        // console.log(obj); // { sum: 41, sum2: 43, sum3: 57 }
+
     });
 
 });
