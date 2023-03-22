@@ -1,14 +1,35 @@
 document.addEventListener('DOMContentLoaded', () => {
     const wrapper = document.querySelectorAll('.select'),
-        price = document.querySelector('#price'),
         btn = document.querySelector('.btn'),
-        dataKeepers = document.querySelectorAll('input'),
-        engine = document.querySelectorAll('.engine');
-
-    let fullPrice, firstSum, secondSum, thirdSum;
+        dataKeepers = document.querySelectorAll('.storage'),
+        calcValues = document.querySelectorAll('.hide'),
+        renderElements = document.querySelectorAll('.render'),
+        engine = document.querySelectorAll('.engine'),
+        menuInputs = document.querySelectorAll('.menu-input');
 
     btn.addEventListener('click', () => {
-        dataKeepers.forEach(el => console.log(el.value));
+
+        firstSumCounter();
+        thirdSumCounter();
+        fullPriceCounter();
+
+        renderElements.forEach(el => {
+            document.querySelector(`.${el.id}`).querySelector('span').textContent = `${el.value}`;
+        });
+
+        calcValues.forEach(raw => {
+            raw.classList.remove('hidden');
+        });
+
+        // <input type="text" id="auction-fees" class="hidden">
+        // <input type="text" id="first-sum" class="hidden">
+        // <input type="text" id="shipping" class="hidden">
+        // <input type="text" id="second-sum" class="hidden">
+        // <input type="text" id="age" class="hidden">
+        // <input type="text" id="capacity" class="hidden">
+        // <input type="text" id="custom-fees" class="hidden">
+        // <input type="text" id="third-sum" class="hidden">
+        // <input type="text" id="full-price" class="hidden">
     });
 
     function engineChoose(engines) {
@@ -35,13 +56,9 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelector(`#${id}`).value = `${value}`;
     }
 
-    // function renderSum(...numbers) {
-    //     fullPrice = numbers.reduce((acc, curr) => acc + curr, 0);
-    //     document.querySelector('.final-sum').textContent = `${fullPrice + 3500 + 600}$`;
-    // }
-
     function firstSumCounter() {
-        let fees = 0;
+        let fees = 0,
+            firstSum = +(document.querySelector('#price').value);
 
         if (firstSum) {
             firstSum = +firstSum;
@@ -109,19 +126,78 @@ document.addEventListener('DOMContentLoaded', () => {
                 fees += Math.round((firstSum * 7) / 100) + 129;
             }
         }
+
         postData('auction-fees', fees);
-        // document.querySelector('.auction-fees').textContent = `${fees} $`;
         firstSum = fees + firstSum + 500;
         postData('first-sum', firstSum);
     }
 
-    price.addEventListener('input', () => {
-        firstSum = +(0 + price.value.replace(/\D/g, ''));
-        firstSumCounter();
-        //     document.querySelector('.price').textContent = `${firstSum} $`;
-        //     document.querySelector('.first-sum').textContent = `${firstCount()}$`;
-        // renderSum(firstSum)
-    });
+    function thirdSumCounter() {
+        const age = +document.querySelector('#age').value,
+            capacity = +document.querySelector('#capacity').value,
+            power = +document.querySelector('#power').value,
+            price = +document.querySelector('#price').value,
+            toCheck = document
+                .querySelector('.hp').parentElement.parentElement;
+
+        console.log(age, capacity, price, power);
+        let year = new Date().getFullYear(),
+            index,
+            result;
+        year = year - age;
+        console.log(year);
+        if (age && capacity && toCheck.classList.contains('hidden')) {
+            if (year <= 3) {
+                index = 6;
+            }
+            if (capacity <= 1500) {
+                3 < year && year <= 5 ? index = 1.7 : index = 3.5;
+            }
+            if (capacity > 1500 && capacity <= 1800) {
+                3 < year && year <= 5 ? index = 2.8 : index = 3.8;
+            }
+            if (capacity > 1800 && capacity <= 2300) {
+                3 < year && year <= 5 ? index = 3 : index = 5.2;
+            }
+            if (capacity > 2300 && capacity <= 3000) {
+                3 < year && year <= 5 ? index = 3.3 : index = 5.5;
+            }
+            if (capacity > 3000) {
+                3 < year && year <= 5 ? index = 4 : index = 6.3;
+            }
+            result = capacity * index + 200;
+        }
+
+        if (age && power && !toCheck.classList.contains('hidden')) {
+            if (power > 0 && power < 150) {
+                index = 0.8;
+            }
+            if (power >= 150) {
+                index = 8;
+            }
+            result = power * index + 200 + price * 0.15 + price * 0.2;
+        }
+
+        result = +Math.ceil(result);
+        postData('custom-fees', result);
+        postData('third-sum', result + 600);
+    }
+
+    function fullPriceCounter() {
+        const fullPrice =
+            (+document.querySelector('#first-sum').value) +
+            (+document.querySelector('#second-sum').value) +
+            (+document.querySelector('#third-sum').value);
+        postData('full-price', fullPrice);
+    }
+
+    menuInputs.forEach(input => {
+        input.addEventListener('change', (e) => {
+            let value = +(input.value.replace(/\D/g, '')),
+                id = e.target.id.replace(/-input/g, "");
+            postData(`${id}`, value);
+        });
+    })
 
     wrapper.forEach(el => {
         el.addEventListener('click', () => {
@@ -167,12 +243,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     secondSum = shipping + ensurance;
                     postData('shipping', shipping);
                     postData('second-sum', secondSum);
-                    // document.querySelector('.shipping').textContent = `${shipping}$`;
-                    // document.querySelector('.ensurance').textContent = `${ensurance}$`;
-                    // document.querySelector('.second-sum').textContent = `${secondSum}$`;
                 }
 
-                if (type.parentElement.classList.contains('capacity')) {
+                if (type.parentElement.classList.contains('to-capacity')) {
                     postData('capacity', `${e.target.id}`);
                 }
 
@@ -181,58 +254,5 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             })
         });
-
-        function thirdSumCounter() {
-            const age = document.querySelector('#age').value,
-                capacity = document.querySelector('#capacity').value,
-                power = document.querySelector('#power').value,
-                toCheck = document.querySelector('.hp').parentElement;
-
-            if (toCheck.classList.contains('hidden')) {
-                let year = new Date().getFullYear(), index;
-                year = year - age;
-
-                if (year <= 3) {
-                    index = 6;
-                }
-                if (capacity <= 1500) {
-                    3 < year && year <= 5 ? index = 1.7 : index = 3.5;
-                }
-                if (3 < year && year <= 5) {
-
-                }
-            }
-        }
-
-        // 1. До 3х лет - 5.5 евро за 1см3 + 200$ любой объем
-        // 2. от 3 - 5 лет
-        // - 1000-1500 см3 - 1.5 евро за 1см3 +200$
-        // - 1501-1800 см3 - 2.5 евро за 1см3 +200$
-        // - 1801 - 2300 см3 - 2.7 евро за 1см3 +200$
-        // - 2301 - 3000 см3 - 3 евро за 1см3 +200$
-        // - 3001 и более - 3.6 евро за 1см3 +200$
-        // 3. от 5 лет и старше
-        // - 1000-1500 см3 - 3.2 евро за 1см3 +200$
-        // - 1501-1800 см3 - 3.5 евро за 1см3 +200$
-        // - 1801 - 2300 см3 - 4.8 евро за 1см3 +200$
-        // - 2301 - 3000 см3 - 5 евро за 1см3 +200$
-        // - 3001 и более - 5.7 евро за 1см3 +200$
-
-
-        // // Разбиваем строку на части по запятой и удаляем пробелы
-        // const parts = str.split(',').map(part => part.trim());
-
-        // // Создаем пустой объект
-        // const obj = {};
-
-        // // Проходимся по каждой части, разбиваем ее на ключ и значение,
-        // // и добавляем их в объект
-        // parts.forEach(part => {
-        //   const [key, value] = part.split(':').map(item => item.trim());
-        //   obj[key] = parseInt(value); // Если нужно, можно преобразовать значение в число
-        // });
-
-        // console.log(obj); // { sum: 41, sum2: 43, sum3: 57 }
-
     });
 });

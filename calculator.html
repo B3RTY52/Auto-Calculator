@@ -29,8 +29,8 @@
             </div>
             <div class="menu-parameter">
                 <h3>Стоимость <span class="info">лота</span></h3>
-                <input type="text" placeholder="Введите стоимость" id="price" maxlength="6"
-                    class="menu-parameter-input hp" />
+                <input type="text" placeholder="Введите стоимость" id="price-input" maxlength="6"
+                    class="menu-parameter-input menu-input" />
             </div>
 
             <div class="menu-parameter year">
@@ -65,7 +65,7 @@
                         <p class="menu-parameter-value">Выберите объем (в см3)</p>
                         <i class="fa-solid fa-chevron-down chevron-icons"></i>
                     </div>
-                    <ul class="menu-parameter-board capacity hidden">
+                    <ul class="menu-parameter-board hidden to-capacity">
 
                     </ul>
                 </div>
@@ -73,23 +73,27 @@
             <div class="menu-parameter engine electro hidden">
                 <h3>Мощность двигателя</h3>
                 <div class="field-wrapper">
-                    <input type="text" placeholder="Введите мощность в л/с" id="power" maxlength="3"
-                        class="menu-parameter-input hp">
+                    <input type="text" placeholder="Введите мощность в л/с" id="power-input" maxlength="3"
+                        class="menu-parameter-input menu-input hp">
                 </div>
             </div>
 
             <div class="menu-parameter">
-                <input type="text" id="auction-fees" class="hidden">
-                <input type="text" id="first-sum" class="hidden">
-                <input type="text" id="shipping" class="hidden">
-                <input type="text" id="second-sum" class="hidden">
-                <input type="text" id="age" class="hidden">
-                <input type="text" id="capacity" class="hidden">
-                <input type="text" id="custom-fees" class="hidden">
-                <input type="text" id="third-sum" class="hidden">
-                <input type="text" id="full-price" class="hidden">
-
-                <button class="btn"> Рассчитать </button>
+                <div class="capsule">
+                    <input type="text" id="auction-fees" class="render storage hidden">
+                    <input type="text" id="first-sum" class="render storage hidden">
+                    <input type="text" id="shipping" class="render storage hidden">
+                    <input type="text" id="second-sum" class="render storage hidden">
+                    <input type="text" id="age" class="storage hidden">
+                    <input type="text" id="capacity" class="storage hidden">
+                    <input type="text" id="custom-fees" class="render storage hidden">
+                    <input type="text" id="third-sum" class="render storage hidden">
+                    <input type="text" id="full-price" class="render storage hidden">
+                    <input type="text" id="power" class="storage hidden">
+                    <input type="text" id="price" class="render storage hidden">
+                </div>
+                <button class="btn"><span class="hidden btn-span">Введите все данные</span> <span
+                        class="btn-span">Рассчитать</span></button>
             </div>
         </div>
 
@@ -100,19 +104,19 @@
                         <h1>ПЕРВЫЙ ПЛАТЕЖ</h1>
                         <div class="table-raw">
                             <p class="table-raw-name">Предполагаемая стоимость автомобиля на аукционе</p>
-                            <p class="price">$</p>
+                            <p class="price"><span class="hide hidden"></span> $</p>
                         </div>
                         <div class="table-raw">
-                            <p class="table-raw-name auction-fees">Аукционные сборы</p>
-                            <p class="auction-fees">$</p>
+                            <p class="table-raw-name">Аукционные сборы</p>
+                            <p class="auction-fees"><span class="hide hidden"></span> $</p>
                         </div>
                         <div class="table-raw">
                             <p class="table-raw-name">Комиссия GeorgiaPodbor</p>
-                            <p class="comission">500 $</p>
+                            <p class="comission"><span class="hide hidden">500</span> $</p>
                         </div>
                         <div class="table-raw">
-                            <h5 class="table-raw-name">Оплачивается на следующий день после выигрыша автомобиля</h5>
-                            <h5 class="first-sum">$</h5>
+                            <h5 class="table-raw-bottom">Оплачивается на следующий день после выигрыша автомобиля</h5>
+                            <h5 class="first-sum"><span class="hide hidden"></span> $</h5>
                         </div>
                     </div>
 
@@ -120,16 +124,16 @@
                         <h1>ВТОРОЙ ПЛАТЕЖ</h1>
                         <div class="table-raw">
                             <p class="table-raw-name">Доставка сушей и морем до порта Грузии</p>
-                            <p class="shipping">$</p>
+                            <p class="shipping"><span class="hide hidden"></span> $</p>
                         </div>
                         <div class="table-raw">
                             <p class="table-raw-name">Страховка</p>
-                            <p><span class="ensurance hidden">1000</span> $</p>
+                            <p><span class="hide ensurance hidden">1000</span> $</p>
                         </div>
                         <div class="table-raw">
                             <h5 class="table-raw-name">Оплачивается за 2 недели до прибытия автомобиля в порт Грузии
                             </h5>
-                            <h5 class="second-sum"> $</h5>
+                            <h5 class="second-sum"><span class="hide hidden"></span> $</h5>
                         </div>
                     </div>
 
@@ -137,22 +141,22 @@
                         <h1>ТРЕТИЙ ПЛАТЕЖ</h1>
                         <div class="table-raw">
                             <p class="table-raw-name">Таможенные <span class="info">сборы</span></p>
-                            <p class="custom-fees">$</p>
+                            <p class="custom-fees"><span class="hide hidden"></span> $</p>
                         </div>
                         <div class="table-raw">
                             <p class="table-raw-name">СБКТПС + электронный ПТС</p>
-                            <p class="">600 $</p>
+                            <p class=""><span class="hide hidden">600</span> $</p>
                         </div>
                         <div class="table-raw">
                             <h5 class="table-raw-name">Оплачивается при оформлении автомобиля</h5>
-                            <h5 class="third-sum">$</h5>
+                            <h5 class="third-sum"><span class="hide hidden"></span> $</h5>
                         </div>
                     </div>
 
                     <div class="table-board-bottom">
                         <div class="table-raw">
-                            <h1 class="table-raw-name">Итоговая стоимость автомобиля</h1>
-                            <h1 class="full-price">$</h1>
+                            <h1 class="table-raw-bottom">Итоговая стоимость автомобиля</h1>
+                            <h1 class="full-price"><span class="hide hidden"></span> $</h1>
                         </div>
                     </div>
                 </div>

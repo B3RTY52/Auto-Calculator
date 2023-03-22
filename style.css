@@ -209,6 +209,11 @@ ul li {
     width: 85%;
 }
 
+.table-raw-bottom {
+    width: 76%;
+}
+
+
 .table-board-bottom {
     height: 129px;
     width: 100%;
@@ -313,4 +318,8 @@ input::after {
     background-color: #FDFDFD;
     transform: scale(1.02);
     cursor: pointer;
+}
+
+.error {
+    border: 1px solid rgb(137, 27, 27);
 }
