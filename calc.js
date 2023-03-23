@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const wrapper = document.querySelectorAll('.select'),
         btn = document.querySelector('.btn'),
-        dataKeepers = document.querySelectorAll('.storage'),
         calcValues = document.querySelectorAll('.hide'),
         renderElements = document.querySelectorAll('.render'),
         engine = document.querySelectorAll('.engine'),
@@ -15,64 +14,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 .querySelector('span').classList.add('hidden');
         });
     }
-
-    btn.addEventListener('click', () => {
-
-        firstSumCounter();
-        thirdSumCounter();
-        fullPriceCounter();
-
-        function checkArrayValues(list) {
-            for (let i = 0; i < list.length; i++) {
-                if (!list[i].value) {
-                    return false;
-                }
-            }
-            return true;
-        }
-
-        if (checkArrayValues(renderElements)) {
-
-            renderElements.forEach(el => {
-                document.querySelector(`.${el.id}`)
-                    .querySelector('span').textContent = `${el.value}`;
-            });
-
-            calcValues.forEach(raw => {
-                raw.classList.remove('hidden');
-            });
-
-        } else {
-
-            const firstPart = document
-                .querySelectorAll('.menu-parameter-input'),
-                secondPart = document
-                    .querySelectorAll('.menu-parameter-field'),
-                allTheList = [...firstPart, ...secondPart];
-
-            allTheList.forEach(selector => {
-                selector.classList.add('error');
-                setTimeout(() => selector.classList.remove('error'), 2000);
-            });
-
-            document.querySelectorAll('.btn-span').forEach(btn => {
-                btn.classList.toggle('hidden');
-                setTimeout(() => btn.classList.toggle('hidden'), 2000);
-            });
-        }
-
-        // <input type="text" id="auction-fees" class="render storage hidden">
-        // <input type="text" id="first-sum" class="render storage hidden">
-        // <input type="text" id="shipping" class="render storage hidden">
-        // <input type="text" id="second-sum" class="render storage hidden">
-        // <input type="text" id="age" class="storage hidden">
-        // <input type="text" id="capacity" class="storage hidden">
-        // <input type="text" id="custom-fees" class="render storage hidden">
-        // <input type="text" id="third-sum" class="render storage hidden">
-        // <input type="text" id="full-price" class="render storage hidden">
-        // <input type="text" id="power" class="storage hidden">
-        // <input type="text" id="price" class="render storage hidden">
-    });
 
     function engineChoose(engines) {
         engines.forEach(el => {
@@ -188,43 +129,46 @@ document.addEventListener('DOMContentLoaded', () => {
             result;
         year = year - age;
 
+        if (age && price) {
+            if (capacity && toCheck.classList.contains('hidden')) {
+                if (year <= 3) {
+                    index = 6;
+                }
+                if (capacity <= 1500) {
+                    3 <= year && year <= 5 ? index = 1.7 : index = 3.5;
+                }
+                if (capacity > 1500 && capacity <= 1800) {
+                    3 <= year && year <= 5 ? index = 2.8 : index = 3.8;
+                }
+                if (capacity > 1800 && capacity <= 2300) {
+                    3 <= year && year <= 5 ? index = 3 : index = 5.2;
+                }
+                if (capacity > 2300 && capacity <= 3000) {
+                    3 <= year && year <= 5 ? index = 3.3 : index = 5.5;
+                }
+                if (capacity > 3000) {
+                    3 <= year && year <= 5 ? index = 4 : index = 6.3;
+                }
+                result = capacity * index + 200;
+            }
 
+            if (power && !toCheck.classList.contains('hidden')) {
+                if (power > 0 && power < 150) {
+                    index = 0.7;
+                }
+                if (power >= 150) {
+                    index = 7;
+                }
+                result = power * index + 200 + price * 0.15 + price * 0.2;
+            }
 
-        if (age && capacity && toCheck.classList.contains('hidden')) {
-            if (year <= 3) {
-                index = 6;
-            }
-            if (capacity <= 1500) {
-                3 <= year && year <= 5 ? index = 1.7 : index = 3.5;
-            }
-            if (capacity > 1500 && capacity <= 1800) {
-                3 <= year && year <= 5 ? index = 2.8 : index = 3.8;
-            }
-            if (capacity > 1800 && capacity <= 2300) {
-                3 <= year && year <= 5 ? index = 3 : index = 5.2;
-            }
-            if (capacity > 2300 && capacity <= 3000) {
-                3 <= year && year <= 5 ? index = 3.3 : index = 5.5;
-            }
-            if (capacity > 3000) {
-                3 <= year && year <= 5 ? index = 4 : index = 6.3;
-            }
-            result = capacity * index + 200;
+            result = +Math.ceil(result);
+            postData('custom-fees', result);
+            postData('third-sum', result + 600);
+            console.log(price);
+        } else {
+            postData('custom-fees', NaN);
         }
-
-        if (age && power && !toCheck.classList.contains('hidden')) {
-            if (power > 0 && power < 150) {
-                index = 0.7;
-            }
-            if (power >= 150) {
-                index = 7;
-            }
-            result = power * index + 200 + price * 0.15 + price * 0.2;
-        }
-
-        result = +Math.ceil(result);
-        postData('custom-fees', result);
-        postData('third-sum', result + 600);
     }
 
     function fullPriceCounter() {
@@ -259,7 +203,6 @@ document.addEventListener('DOMContentLoaded', () => {
             renderLists(el, 2023, 2002, 1);
         }
 
-
         const carsType = el.querySelectorAll('.values-list');
         carsType.forEach(type => {
             type.addEventListener('click', (e) => {
@@ -281,7 +224,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     let shipping = 2000,
                         ensurance = 1000;
 
-                    if (e.target.id === 'Кроссовер/Внедорожник') {
+                    if (e.target.id === 'Кроссовер') {
                         shipping = 2090;
                     }
                     if (e.target.id === 'Пикап') {
@@ -301,5 +244,48 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             })
         });
+    });
+
+    btn.addEventListener('click', () => {
+        firstSumCounter();
+        thirdSumCounter();
+        fullPriceCounter();
+
+        function checkArrayValues(list) {
+            for (let i = 0; i < list.length; i++) {
+                if (!list[i].value) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        if (checkArrayValues(renderElements)) {
+            renderElements.forEach(el => {
+                document.querySelector(`.${el.id}`)
+                    .querySelector('span').textContent = `${el.value}`;
+            });
+
+            calcValues.forEach(raw => {
+                raw.classList.remove('hidden');
+            });
+
+        } else {
+            const firstPart = document
+                .querySelectorAll('.menu-parameter-input'),
+                secondPart = document
+                    .querySelectorAll('.menu-parameter-field'),
+                allTheList = [...firstPart, ...secondPart];
+
+            allTheList.forEach(selector => {
+                selector.classList.add('error');
+                setTimeout(() => selector.classList.remove('error'), 2000);
+            });
+
+            document.querySelectorAll('.btn-span').forEach(btn => {
+                btn.classList.toggle('hidden');
+                setTimeout(() => btn.classList.toggle('hidden'), 2000);
+            });
+        }
     });
 });

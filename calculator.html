@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
     <script src="https://kit.fontawesome.com/912c9bcd45.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="style.css">
     <title>Calculator-Module</title>
 </head>
 
@@ -22,7 +22,7 @@
                     </div>
                     <ul class="menu-parameter-board hidden cars-type">
                         <li class="values-list" id="Легковой">Легковой</li>
-                        <li class="values-list" id="Кроссовер/Внедорожник">Кроссовер/Внедорожник</li>
+                        <li class="values-list" id="Кроссовер">Кроссовер<span class="last-word">/Внедорожник</span></li>
                         <li class="values-list" id="Пикап">Пикап</li>
                     </ul>
                 </div>
@@ -48,7 +48,8 @@
                 <h3>Тип двигателя</h3>
                 <div class="field-wrapper">
                     <div class="menu-parameter-field">
-                        <p class="menu-parameter-value"><span class="engine-value">Выбрать тип двигателя</span></p>
+                        <p class="menu-parameter-value"><span class="engine-value">Выбрать тип <span
+                                    class="last-word">двигателя</span></span></p>
                         <i class="fa-solid fa-chevron-down chevron-icons"></i>
                     </div>
                     <ul class="menu-parameter-board hidden">
@@ -62,7 +63,7 @@
                 <h3>Объем двигателя</h3>
                 <div class="field-wrapper select">
                     <div class="menu-parameter-field">
-                        <p class="menu-parameter-value">Выберите объем (в см3)</p>
+                        <p class="menu-parameter-value">Выберите объем <span class="last-word">(в см3)</span></p>
                         <i class="fa-solid fa-chevron-down chevron-icons"></i>
                     </div>
                     <ul class="menu-parameter-board hidden to-capacity">
@@ -71,7 +72,7 @@
                 </div>
             </div>
             <div class="menu-parameter engine electro hidden">
-                <h3>Мощность двигателя</h3>
+                <h3 class="addition-parent">Мощность двигателя <span class="addition">(в л/с)</span></h3>
                 <div class="field-wrapper">
                     <input type="text" placeholder="Введите мощность в л/с" id="power-input" maxlength="3"
                         class="menu-parameter-input menu-input hp">
@@ -94,7 +95,7 @@
                 </div>
                 <button class="btn">
                     <span class="btn-span">Рассчитать</span>
-                    <span class="hidden btn-span">Введите все данные</span>
+                    <span class="hidden btn-span">Введите <span class="last-word">все</span> данные</span>
                 </button>
             </div>
         </div>
