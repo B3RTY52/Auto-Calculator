@@ -7,29 +7,71 @@ document.addEventListener('DOMContentLoaded', () => {
         engine = document.querySelectorAll('.engine'),
         menuInputs = document.querySelectorAll('.menu-input');
 
+    unrenderValues();
+
+    function unrenderValues() {
+        renderElements.forEach(el => {
+            document.querySelector(`.${el.id}`)
+                .querySelector('span').classList.add('hidden');
+        });
+    }
+
     btn.addEventListener('click', () => {
 
         firstSumCounter();
         thirdSumCounter();
         fullPriceCounter();
 
-        renderElements.forEach(el => {
-            document.querySelector(`.${el.id}`).querySelector('span').textContent = `${el.value}`;
-        });
+        function checkArrayValues(list) {
+            for (let i = 0; i < list.length; i++) {
+                if (!list[i].value) {
+                    return false;
+                }
+            }
+            return true;
+        }
 
-        calcValues.forEach(raw => {
-            raw.classList.remove('hidden');
-        });
+        if (checkArrayValues(renderElements)) {
 
-        // <input type="text" id="auction-fees" class="hidden">
-        // <input type="text" id="first-sum" class="hidden">
-        // <input type="text" id="shipping" class="hidden">
-        // <input type="text" id="second-sum" class="hidden">
-        // <input type="text" id="age" class="hidden">
-        // <input type="text" id="capacity" class="hidden">
-        // <input type="text" id="custom-fees" class="hidden">
-        // <input type="text" id="third-sum" class="hidden">
-        // <input type="text" id="full-price" class="hidden">
+            renderElements.forEach(el => {
+                document.querySelector(`.${el.id}`)
+                    .querySelector('span').textContent = `${el.value}`;
+            });
+
+            calcValues.forEach(raw => {
+                raw.classList.remove('hidden');
+            });
+
+        } else {
+
+            const firstPart = document
+                .querySelectorAll('.menu-parameter-input'),
+                secondPart = document
+                    .querySelectorAll('.menu-parameter-field'),
+                allTheList = [...firstPart, ...secondPart];
+
+            allTheList.forEach(selector => {
+                selector.classList.add('error');
+                setTimeout(() => selector.classList.remove('error'), 2000);
+            });
+
+            document.querySelectorAll('.btn-span').forEach(btn => {
+                btn.classList.toggle('hidden');
+                setTimeout(() => btn.classList.toggle('hidden'), 2000);
+            });
+        }
+
+        // <input type="text" id="auction-fees" class="render storage hidden">
+        // <input type="text" id="first-sum" class="render storage hidden">
+        // <input type="text" id="shipping" class="render storage hidden">
+        // <input type="text" id="second-sum" class="render storage hidden">
+        // <input type="text" id="age" class="storage hidden">
+        // <input type="text" id="capacity" class="storage hidden">
+        // <input type="text" id="custom-fees" class="render storage hidden">
+        // <input type="text" id="third-sum" class="render storage hidden">
+        // <input type="text" id="full-price" class="render storage hidden">
+        // <input type="text" id="power" class="storage hidden">
+        // <input type="text" id="price" class="render storage hidden">
     });
 
     function engineChoose(engines) {
@@ -46,7 +88,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function renderLists(list, amount, startFrom, rate) {
         for (let i = startFrom; i <= amount; i++) {
-            list.querySelector('.menu-parameter-board').insertAdjacentHTML('beforeend', `
+            list.querySelector('.menu-parameter-board')
+                .insertAdjacentHTML('beforeend', `
             <li class="values-list" id="${i * rate}">${i * rate}</li>
             `);
         }
@@ -140,40 +183,41 @@ document.addEventListener('DOMContentLoaded', () => {
             toCheck = document
                 .querySelector('.hp').parentElement.parentElement;
 
-        console.log(age, capacity, price, power);
         let year = new Date().getFullYear(),
             index,
             result;
         year = year - age;
-        console.log(year);
+
+
+
         if (age && capacity && toCheck.classList.contains('hidden')) {
             if (year <= 3) {
                 index = 6;
             }
             if (capacity <= 1500) {
-                3 < year && year <= 5 ? index = 1.7 : index = 3.5;
+                3 <= year && year <= 5 ? index = 1.7 : index = 3.5;
             }
             if (capacity > 1500 && capacity <= 1800) {
-                3 < year && year <= 5 ? index = 2.8 : index = 3.8;
+                3 <= year && year <= 5 ? index = 2.8 : index = 3.8;
             }
             if (capacity > 1800 && capacity <= 2300) {
-                3 < year && year <= 5 ? index = 3 : index = 5.2;
+                3 <= year && year <= 5 ? index = 3 : index = 5.2;
             }
             if (capacity > 2300 && capacity <= 3000) {
-                3 < year && year <= 5 ? index = 3.3 : index = 5.5;
+                3 <= year && year <= 5 ? index = 3.3 : index = 5.5;
             }
             if (capacity > 3000) {
-                3 < year && year <= 5 ? index = 4 : index = 6.3;
+                3 <= year && year <= 5 ? index = 4 : index = 6.3;
             }
             result = capacity * index + 200;
         }
 
         if (age && power && !toCheck.classList.contains('hidden')) {
             if (power > 0 && power < 150) {
-                index = 0.8;
+                index = 0.7;
             }
             if (power >= 150) {
-                index = 8;
+                index = 7;
             }
             result = power * index + 200 + price * 0.15 + price * 0.2;
         }
@@ -196,6 +240,7 @@ document.addEventListener('DOMContentLoaded', () => {
             let value = +(input.value.replace(/\D/g, '')),
                 id = e.target.id.replace(/-input/g, "");
             postData(`${id}`, value);
+            unrenderValues();
         });
     })
 
@@ -203,6 +248,7 @@ document.addEventListener('DOMContentLoaded', () => {
         el.addEventListener('click', () => {
             el.querySelector('.menu-parameter-board').classList.toggle('hidden');
             el.querySelector('.menu-parameter-field').classList.toggle('hidden');
+            unrenderValues();
         })
 
         if (el.parentElement.classList.contains('benzin')) {
@@ -217,7 +263,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const carsType = el.querySelectorAll('.values-list');
         carsType.forEach(type => {
             type.addEventListener('click', (e) => {
-                el.querySelector('.menu-parameter-value').textContent = `${e.target.id}`;
+                el.querySelector('.menu-parameter-value')
+                    .textContent = `${e.target.id}`;
 
                 if (e.target.id === 'Электрический') {
                     engineChoose(engine);
