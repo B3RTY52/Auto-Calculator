@@ -48,6 +48,10 @@ ul li {
     list-style: none;
 }
 
+ul {
+    padding: 0 0 !important;
+}
+
 .wrapper {
     margin: 0 auto;
     max-width: 1120px;
@@ -371,7 +375,7 @@ ul li {
     }
 }
 
-@media (max-width: 720px) {
+@media (max-width: 640px) {
 
     .menu {
         max-height: 95vh;
@@ -379,16 +383,32 @@ ul li {
         justify-content: center;
     }
 
+    .menu h3,
+    .menu p {
+        font-size: 14px;
+    }
+
+    .menu h3 {
+        display: inline-block;
+        height: 43px;
+    }
+
+
     input {
-        font-size: 16px;
+        font-size: 13px;
     }
 
     .menu-parameter {
         width: 40vw;
     }
 
+    .menu-parameter h3 {
+        line-height: unset;
+        padding-top: 5px;
+    }
+
     .table-board {
-        width: 90%;
+        width: 95%;
         justify-content: center;
     }
 
@@ -436,4 +456,13 @@ ul li {
     .table-raw-bottom h1 {
         font-size: 18px;
     }
+
+    .addition {
+        display: none;
+    }
+
+    .info::after {
+        top: -4px;
+    }
+
 }
