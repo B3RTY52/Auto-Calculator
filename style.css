@@ -407,6 +407,11 @@ ul {
         padding-top: 5px;
     }
 
+    .board-wrapper {
+        height: auto;
+        max-height: 868px;
+    }
+
     .table-board {
         width: 95%;
         justify-content: center;
@@ -420,14 +425,14 @@ ul {
     .table-board-warning p,
     .table-board-raw span,
     .table-board-section h5 {
-        font-size: 16px;
+        font-size: 14px;
         line-height: inherit;
         padding-bottom: 15px;
     }
 
     .table-board-bottom h1,
     .table-board-section h1 {
-        font-size: 20px;
+        font-size: 18px;
         line-height: inherit;
         padding-bottom: 15px;
     }
@@ -446,7 +451,7 @@ ul {
     }
 
     .table-board-section p {
-        font-size: 15px;
+        font-size: 14px;
     }
 
     .table-raw-bottom {
